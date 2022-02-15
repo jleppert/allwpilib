@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 #include "frc/controller/HolonomicDriveController.h"
 
 #include <utility>
@@ -71,6 +72,26 @@ ChassisSpeeds HolonomicDriveController::Calculate(
     const Rotation2d& angleRef) {
   return Calculate(currentPose, desiredState.pose, desiredState.velocity,
                    angleRef);
+}
+
+Pose2d HolonomicDriveController::getPoseError() {
+  return m_poseError;
+}
+
+Rotation2d HolonomicDriveController::getRotationError() {
+  return m_rotationError;
+}
+
+frc2::PIDController HolonomicDriveController::getXController() {
+  return m_xController;
+}
+
+frc2::PIDController HolonomicDriveController::getYController() {
+  return m_yController;
+}
+
+ProfiledPIDController<units::radian> HolonomicDriveController::getThetaController() {
+  return m_thetaController;
 }
 
 void HolonomicDriveController::SetEnabled(bool enabled) {
