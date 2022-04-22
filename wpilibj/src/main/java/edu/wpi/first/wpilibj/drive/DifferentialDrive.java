@@ -70,9 +70,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  * |       |
  * </pre>
  *
- * <p>Each drive() function provides different inverse kinematic relations for a differential drive
- * robot. Motor outputs for the right side are negated, so motor direction inversion by the user is
- * usually unnecessary.
+ * <p>Each drive function provides different inverse kinematic relations for a differential drive
+ * robot.
  *
  * <p>This library uses the NED axes convention (North-East-Down as external reference in the world
  * frame): http://www.nuclearprojects.com/ins/images/axis_big.png.
@@ -84,6 +83,9 @@ import edu.wpi.first.wpilibj.SpeedController;
  * <p>Inputs smaller then {@value edu.wpi.first.wpilibj.drive.RobotDriveBase#kDefaultDeadband} will
  * be set to 0, and larger values will be scaled so that the full range is still used. This deadband
  * value can be changed with {@link #setDeadband}.
+ *
+ * <p>{@link edu.wpi.first.wpilibj.MotorSafety} is enabled by default. The tankDrive, arcadeDrive,
+ * or curvatureDrive methods should be called periodically to avoid Motor Safety timeouts.
  */
 @SuppressWarnings("removal")
 public class DifferentialDrive extends RobotDriveBase implements Sendable, AutoCloseable {
@@ -280,9 +282,9 @@ public class DifferentialDrive extends RobotDriveBase implements Sendable, AutoC
 
     double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
 
-    if (xSpeed >= 0.0) {
+    if (Double.compare(xSpeed, 0.0) >= 0) {
       // First quadrant, else second quadrant
-      if (zRotation >= 0.0) {
+      if (Double.compare(zRotation, 0.0) >= 0) {
         leftSpeed = maxInput;
         rightSpeed = xSpeed - zRotation;
       } else {
@@ -291,7 +293,7 @@ public class DifferentialDrive extends RobotDriveBase implements Sendable, AutoC
       }
     } else {
       // Third quadrant, else fourth quadrant
-      if (zRotation >= 0.0) {
+      if (Double.compare(zRotation, 0.0) >= 0) {
         leftSpeed = xSpeed + zRotation;
         rightSpeed = maxInput;
       } else {

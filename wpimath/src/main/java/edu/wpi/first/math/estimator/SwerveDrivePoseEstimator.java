@@ -67,9 +67,9 @@ public class SwerveDrivePoseEstimator {
    * @param stateStdDevs Standard deviations of model states. Increase these numbers to trust your
    *     model's state estimates less. This matrix is in the form [x, y, theta]ᵀ, with units in
    *     meters and radians.
-   * @param localMeasurementStdDevs Standard deviations of the encoder and gyro measurements.
-   *     Increase these numbers to trust sensor readings from encoders and gyros less. This matrix
-   *     is in the form [theta], with units in radians.
+   * @param localMeasurementStdDevs Standard deviation of the gyro measurement. Increase this number
+   *     to trust sensor readings from the gyro less. This matrix is in the form [theta], with units
+   *     in radians.
    * @param visionMeasurementStdDevs Standard deviations of the vision measurements. Increase these
    *     numbers to trust global measurements from vision less. This matrix is in the form [x, y,
    *     theta]ᵀ, with units in meters and radians.
@@ -172,8 +172,6 @@ public class SwerveDrivePoseEstimator {
 
   /**
    * Resets the robot's position on the field.
-   *
-   * <p>You NEED to reset your encoders (to zero) when calling this method.
    *
    * <p>The gyroscope angle does not need to be reset in the user's robot code. The library
    * automatically takes care of offsetting the gyro angle.

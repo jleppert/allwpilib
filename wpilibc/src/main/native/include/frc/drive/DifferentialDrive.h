@@ -81,9 +81,8 @@ class SpeedController;
  * |       |
  * </pre>
  *
- * Each Drive() function provides different inverse kinematic relations for a
- * differential drive robot. Motor outputs for the right side are negated, so
- * motor direction inversion by the user is usually unnecessary.
+ * Each drive function provides different inverse kinematic relations for a
+ * differential drive robot.
  *
  * This library uses the NED axes convention (North-East-Down as external
  * reference in the world frame):
@@ -96,6 +95,10 @@ class SpeedController;
  * Inputs smaller then 0.02 will be set to 0, and larger values will be scaled
  * so that the full range is still used. This deadband value can be changed
  * with SetDeadband().
+ *
+ * MotorSafety is enabled by default. The tankDrive, arcadeDrive,
+ * or curvatureDrive methods should be called periodically to avoid Motor
+ * Safety timeouts.
  */
 class DifferentialDrive : public RobotDriveBase,
                           public wpi::Sendable,

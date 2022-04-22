@@ -39,6 +39,9 @@ import edu.wpi.first.wpilibj.SpeedController;
  * <p>The positive X axis points ahead, the positive Y axis points right, and the positive Z axis
  * points down. Rotations follow the right-hand rule, so clockwise rotation around the Z axis is
  * positive.
+ *
+ * <p>{@link edu.wpi.first.wpilibj.MotorSafety} is enabled by default. The driveCartesian or
+ * drivePolar methods should be called periodically to avoid Motor Safety timeouts.
  */
 @SuppressWarnings("removal")
 public class KilloughDrive extends RobotDriveBase implements Sendable, AutoCloseable {
@@ -231,6 +234,23 @@ public class KilloughDrive extends RobotDriveBase implements Sendable, AutoClose
         magnitude * Math.cos(angle * (Math.PI / 180.0)),
         zRotation,
         0.0);
+  }
+
+  /**
+   * Cartesian inverse kinematics for Killough platform.
+   *
+   * <p>Angles are measured clockwise from the positive X axis. The robot's speed is independent
+   * from its angle or rotation rate.
+   *
+   * @param ySpeed The robot's speed along the Y axis [-1.0..1.0]. Right is positive.
+   * @param xSpeed The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
+   * @param zRotation The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is
+   *     positive.
+   * @return Wheel speeds [-1.0..1.0].
+   */
+  @SuppressWarnings("ParameterName")
+  public WheelSpeeds driveCartesianIK(double ySpeed, double xSpeed, double zRotation) {
+    return driveCartesianIK(ySpeed, xSpeed, zRotation, 0.0);
   }
 
   /**
